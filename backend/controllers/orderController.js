@@ -18,7 +18,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
   if (orderItems && orderItems.length === 0) {
     res.status(400)
     throw new Error('No order items')
-    return
+    //return
   } else {
     const order = new Order({
       orderItems,
@@ -58,25 +58,31 @@ const getOrderById = asyncHandler(async (req, res) => {
 // @route   GET /api/orders/:id/pay
 // @access  Private
 const updateOrderToPaid = asyncHandler(async (req, res) => {
-  const order = await Order.findById(req.params.id)
+  console.log(req.body)
 
-  if (order) {
+  try{
+
+  const order = await Order.findById(req.params.id)
+// console.log(`orderere   ${order}`)
+  
     order.isPaid = true
     order.paidAt = Date.now()
     order.paymentResult = {
       id: req.body.id,
       status: req.body.status,
-      update_time: req.body.update_time,
-      email_address: req.body.payer.email_address,
+      update_time: req.body.created,
+      email_address: req.body.receipt_email,
     }
-
     const updatedOrder = await order.save()
-
     res.json(updatedOrder)
-  } else {
-    res.status(404)
-    throw new Error('Order not found')
+
+
   }
+  catch(err){
+    console.log(err);
+  }
+
+
 })
 
 // @desc    Update order to delivered
@@ -90,7 +96,7 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
     order.deliveredAt = Date.now()
 
     const updatedOrder = await order.save()
-
+    
     res.json(updatedOrder)
   } else {
     res.status(404)
