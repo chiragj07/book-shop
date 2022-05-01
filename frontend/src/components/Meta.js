@@ -5,7 +5,7 @@ const Meta = ({ title, description, keywords }) => {
   console.log(title);
   return (
     <Helmet>
-      <title>{title === "Welcome To ProShop" ? "welcom to Books e-store" : title}</title>
+      <title>{title}</title>
       <meta name='description' content={description} />
       <meta name='keyword' content={keywords} />
     </Helmet>
@@ -13,9 +13,9 @@ const Meta = ({ title, description, keywords }) => {
 }
 
 Meta.defaultProps = {
-  title: 'Welcome To ProShop',
-  description: 'We sell the best products for cheap',
-  keywords: 'electronics, buy electronics, cheap electroincs',
+  title: 'Welcome To Books e-Store',
+  description: 'We sell the best books for best price',
+  keywords: 'Buy Books online',
 }
 
 export default Meta
