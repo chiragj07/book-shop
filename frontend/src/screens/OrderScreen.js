@@ -51,6 +51,7 @@ const OrderScreen = ({ match, history }) => {
     if (!userInfo) {
       history.push('/login')
     }
+    console.log(userInfo._id)
 
     // const addPayPalScript = async () => {
     //   const { data: clientId } = await axios.get('/api/config/paypal')
@@ -63,7 +64,7 @@ const OrderScreen = ({ match, history }) => {
     //   }
     //   document.body.appendChild(script)
     // }
-
+    if(order) console.log(order);
     if (!order || successPay || successDeliver || order._id !== orderId) {
       dispatch({ type: ORDER_PAY_RESET })
       dispatch({ type: ORDER_DELIVER_RESET })
@@ -211,25 +212,54 @@ const OrderScreen = ({ match, history }) => {
                   <Col>₹{order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
-              {!order.isPaid && (
-                <ListGroup.Item>
+              <ListGroup.Item>
+              {!order.isPaid ? (
+                <div>
                   {loadingPay && <Loader />}
                   
                      {/* <PayPalButton
                       amount={order.totalPrice}
                       onSuccess={successPaymentHandler}
                     /> */}
-                    <StripeCheckout
+                    {
+                      !order.isDelivered&& order?.paymentMethod ==='cod' &&(
+                  <div>
+                    Your Order is on the way
+                  </div>
+                    )
+                    }
+                    {(order?.user?._id === userInfo._id)
+                     && (order?.paymentMethod !== 'cod')
+                      && (<StripeCheckout
                       stripeKey='pk_test_51K6D6ISBDSlDpcqyn0yhdqO2KSgpjlbASfVoj3R1MqOfd6tZ83rFZmVhHTvrLq5WpqfG70vW56otRzm63hoWCpXO00dsNs9M8h'
                       name="Book e-Store"
                       description='Buy your favourite books online'
                       amount={(order.totalPrice)*100}
                       currency="INR"
                       token ={handleToken}
-                    />
-                  
-                </ListGroup.Item>
-              )}
+                    />)}
+                 </div> 
+                
+              ):(
+                <div>
+                  {
+                    !order.isDelivered ?(
+                      <div>
+                        Your Order is on the way
+                      </div>
+                        ):(
+                          <div>
+                            Your Order is Delivered
+                          </div>
+                        )
+
+                  }
+                </div>
+                
+
+              )  }
+              </ListGroup.Item>
+              
               {loadingDeliver && <Loader />}
               {userInfo &&
                 userInfo.isAdmin &&
