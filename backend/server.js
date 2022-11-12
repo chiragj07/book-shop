@@ -20,7 +20,7 @@ import paymentRoute from './routes/paymentRoute.js'
 dotenv.config()
 
 var corsOptions = {
-  origin: `http://localhost:3000`,
+  origin: `${process.env.ALLOWED_URI}`,
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
