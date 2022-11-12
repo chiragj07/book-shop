@@ -19,16 +19,13 @@ import paymentRoute from './routes/paymentRoute.js'
 
 dotenv.config()
 
-var corsOptions = {
-  origin: `https://book-e-shop.netlify.app/`,
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+
 
 connectDB()
 
 const app = express()
 
-app.use(cors(corsOptions))
+app.use(cors())
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
