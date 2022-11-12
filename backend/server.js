@@ -20,7 +20,7 @@ import paymentRoute from './routes/paymentRoute.js'
 dotenv.config()
 
 var corsOptions = {
-  origin: `${process.env.ALLOWED_URI}`,
+  origin: `https://book-e-shop.netlify.app/`,
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
