@@ -19,7 +19,7 @@ const ProductEditScreen = ({ match, history }) => {
   const [category, setCategory] = useState('')
   const [countInStock, setCountInStock] = useState(0)
   const [description, setDescription] = useState('')
-  const [uploading, setUploading] = useState(true)
+  const [uploading, setUploading] = useState(false)
   const [imageToUpload, setimageToUpload] = useState('')
   const dispatch = useDispatch()
 
