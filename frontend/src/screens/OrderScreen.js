@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios'
 //import { PayPalButton } from 'react-paypal-button-v2'
 import { Link } from 'react-router-dom'
@@ -20,7 +20,6 @@ import {
 const OrderScreen = ({ match, history }) => {
   const orderId = match.params.id
 
-  //const [sdkReady, setSdkReady] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -51,7 +50,6 @@ const OrderScreen = ({ match, history }) => {
     if (!userInfo) {
       history.push('/login')
     }
-    console.log(userInfo._id)
 
     // const addPayPalScript = async () => {
     //   const { data: clientId } = await axios.get('/api/config/paypal')
@@ -71,7 +69,7 @@ const OrderScreen = ({ match, history }) => {
       dispatch(getOrderDetails(orderId))
     } 
     
-  }, [dispatch, orderId, successPay, successDeliver, order])
+  }, [dispatch,history,userInfo, orderId, successPay, successDeliver, order])
 
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult)

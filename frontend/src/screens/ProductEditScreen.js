@@ -54,30 +54,18 @@ const ProductEditScreen = ({ match, history }) => {
 
 
   const captureFile = async(event) => {
-    setUploading(true);
     event.preventDefault();
     console.log(event)
     const file = event.target.files[0];
     
     setImageToUplaod(file)
 
-
-    // const reader = new window.FileReader();
-    // console.log(reader);
-    // reader.readAsArrayBuffer(file);
-
-    // reader.onloadend = async() => {
-    //   const z = Buffer(reader.result);
-    //   const result = await ipfs.add(z);
-    //   console.log(result);
-    //   setImage(result.path);
-      setUploading(false);
     // };
   };
 
   const handleImageUpload = async (e)=>{
-    console.log(e)
-    console.log(imageToUplaod)
+    setUploading(true);
+
     // REACT_APP_CLOUDANARY_API_KEY
     const signature_cloudinary  = await axios.get(`/api/products/get-signature`)
     console.log(signature_cloudinary.data)
@@ -91,9 +79,7 @@ const ProductEditScreen = ({ match, history }) => {
     // data.append("signature", signature_cloudinary.data.signature)
     data.append("timestamp", signature_cloudinary.data.timestamp)
 
-    for(let pair of data.entries()){
-      console.log(pair)
-    }
+    
 
     const cloudinaryResponse = await axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD}/auto/upload`, data, {
     headers: { "Content-Type": "multipart/form-data" },
@@ -102,6 +88,9 @@ const ProductEditScreen = ({ match, history }) => {
     }
   })
   setImage(cloudinaryResponse.data.public_id)
+
+  setUploading(false);
+
 
 
   }
