@@ -11,7 +11,6 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder",
     "data:destroy": "node backend/seeder -d"
-    
   },
   "author": "Chirag Joshi",
   "license": "MIT",
@@ -19,6 +18,7 @@
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.32.0",
     "colors": "^1.4.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",

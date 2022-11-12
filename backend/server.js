@@ -2,6 +2,7 @@ import path from 'path'
 import express from 'express'
 import dotenv from 'dotenv'
 import colors from 'colors'
+import cors from 'cors'
 import morgan from 'morgan'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import connectDB from './config/db.js'
@@ -12,11 +13,22 @@ import orderRoutes from './routes/orderRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
 import paymentRoute from './routes/paymentRoute.js'
 
+
+
+
+
 dotenv.config()
+
+var corsOptions = {
+  origin: `http://localhost:3000`,
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
 
 connectDB()
 
 const app = express()
+
+app.use(cors(corsOptions))
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))

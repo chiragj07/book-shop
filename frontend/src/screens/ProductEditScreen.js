@@ -67,7 +67,7 @@ const ProductEditScreen = ({ match, history }) => {
     setUploading(true);
 
     // REACT_APP_CLOUDANARY_API_KEY
-    const signature_cloudinary  = await axios.get(`/api/products/get-signature`)
+    const signature_cloudinary  = await axios.get(`${process.env.REACT_APP_BASE_URI}/api/products/get-signature`)
     console.log(signature_cloudinary.data)
 
     const data = new FormData()
@@ -81,7 +81,7 @@ const ProductEditScreen = ({ match, history }) => {
 
     
 
-    const cloudinaryResponse = await axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD}/auto/upload`, data, {
+    const cloudinaryResponse = await axios.post(`https:/${process.env.REACT_APP_BASE_URI}.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD}/auto/upload`, data, {
     headers: { "Content-Type": "multipart/form-data" },
     onUploadProgress: function (e) {
       console.log(e.loaded / e.total)
