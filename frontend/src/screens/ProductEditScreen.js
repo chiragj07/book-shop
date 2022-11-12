@@ -84,8 +84,8 @@ const ProductEditScreen = ({ match, history }) => {
     data.append("timestamp", signature_cloudinary.data.timestamp)
 
     
-
-    const cloudinaryResponse = await axios.post(`https:/${process.env.REACT_APP_BASE_URI}.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD}/auto/upload`, data, {
+    try{
+    const cloudinaryResponse = await axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD}/auto/upload`, data, {
     headers: { "Content-Type": "multipart/form-data" },
     onUploadProgress: function (e) {
       console.log(e.loaded / e.total)
@@ -95,7 +95,11 @@ const ProductEditScreen = ({ match, history }) => {
   setImage(cloudinaryResponse.data.public_id)
 
   setUploading(false);
+}
+catch{
+  setUploading(false);
 
+}
 
 
   }
