@@ -60,6 +60,16 @@ h2 {
   width: 20%;
 
 }
+
+
+
+
+.loader-class{
+  position: absolute;
+  left: 40%;
+  top:40%;
+  z-index:3;
+}
 @media (max-width: 900px) {
   .carousel-caption h2 {
     font-size: 2.5vw;

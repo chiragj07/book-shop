@@ -19,8 +19,8 @@ const ProductEditScreen = ({ match, history }) => {
   const [category, setCategory] = useState('')
   const [countInStock, setCountInStock] = useState(0)
   const [description, setDescription] = useState('')
-  const [uploading, setUploading] = useState(false)
-  const [imageToUplaod, setImageToUplaod] = useState('')
+  const [uploading, setUploading] = useState(true)
+  const [imageToUpload, setimageToUpload] = useState('')
   const dispatch = useDispatch()
 
   const productDetails = useSelector((state) => state.productDetails)
@@ -57,13 +57,17 @@ const ProductEditScreen = ({ match, history }) => {
     event.preventDefault();
     console.log(event)
     const file = event.target.files[0];
-    
-    setImageToUplaod(file)
+    console.log(file)
+    setimageToUpload(file)
 
     // };
   };
 
   const handleImageUpload = async (e)=>{
+    if(!imageToUpload) {
+      alert("please select an image")
+      return
+    }
     setUploading(true);
 
     // REACT_APP_CLOUDANARY_API_KEY
@@ -71,7 +75,7 @@ const ProductEditScreen = ({ match, history }) => {
     console.log(signature_cloudinary.data)
 
     const data = new FormData()
-    data.append("file", imageToUplaod)
+    data.append("file", imageToUpload)
     data.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY)
     console.log(process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET)
     data.append("upload_preset",process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET)
@@ -87,6 +91,7 @@ const ProductEditScreen = ({ match, history }) => {
       console.log(e.loaded / e.total)
     }
   })
+  
   setImage(cloudinaryResponse.data.public_id)
 
   setUploading(false);
@@ -118,9 +123,9 @@ const ProductEditScreen = ({ match, history }) => {
       <Link to='/admin/productlist' className='btn btn-light my-3'>
         Go Back
       </Link>
-      <FormContainer>
+      <FormContainer className="main-container-form">
         <h1>Edit Product</h1>
-        {loadingUpdate && <Loader />}
+        {(loadingUpdate || uploading) && <div className="loader-class"><Loader/> </div>}
         {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
         {loading ? (
           <Loader />
@@ -161,9 +166,10 @@ const ProductEditScreen = ({ match, history }) => {
               <button type='button' variant='primary' id="image-btn" onClick={handleImageUpload}>
                 Upload
               </button>
-              {uploading && <Loader />}
               </div>
             </Form.Group>
+            <div style={{display:`${imageToUpload ? 'block':'none'}`, margin:"6px"}}>{imageToUpload && imageToUpload.name} </div>
+
 
             <Form.Group controlId='brand'>
               <Form.Label>Brand</Form.Label>
